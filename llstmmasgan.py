@@ -72,7 +72,7 @@ class ChannelAttention(nn.Module):
             nn.Sigmoid()
         )
 
-        # 参数初始化
+
 
 
     def forward(self, input):
