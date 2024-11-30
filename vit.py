@@ -13,14 +13,7 @@ class PatchemBed(nn.Module):
         x=self.conv(x)
         x=x.flatten(2).permute(0,2,1)
         return x
-'''img=Image.open('C:/Users/QianXinZhi/Desktop/无噪.png')
-plt.imshow(img)
-plt.show()
-if img.mode == 'RGBA':
-    img = img.convert('RGB')
-transform=transforms.Compose([transforms.Resize([256,512]),transforms.ToTensor()])
-img=transform(img)
-img=img.unsqueeze(0)'''
+
 class Attention(nn.Module):
     def __init__(self,embed_dim,num_heads):
         super(Attention,self).__init__()
@@ -87,6 +80,3 @@ class Vit(nn.Module):
         x = self.blocks(x)
         x=self.norm(x)
         return x
-'''block=Vit(embed_dim=768,num_heads=4,mlp_ratio=2,act_layer=nn.GELU,in_channels=3,kernel_size=16,depth=8,img_size_h=256,img_size_w=512)
-x=block(img).transpose(1,2).reshape(1,3,256,512)
-print(x.shape)'''
