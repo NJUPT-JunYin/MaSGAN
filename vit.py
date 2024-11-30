@@ -1,7 +1,6 @@
 import torch
 import torch.nn as nn
-from PIL import Image
-import torchvision.transforms as transforms
+
 class PatchemBed(nn.Module):
     def __init__(self,in_channels,embed_dim,img_size_h,img_size_w,kernel_size,stride):
         super(PatchemBed, self).__init__()

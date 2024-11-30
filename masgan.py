@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import vit
+
 
 device = (torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu'))
 
@@ -18,7 +18,7 @@ class ChannelAttention(nn.Module):
             nn.Sigmoid()
         )
 
-        # 参数初始化
+
 
     def forward(self, input):
         b, c, _, _ = input.size()

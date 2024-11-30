@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import vit
+
 device=(torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu'))
 class llstm(nn.Module):
     def __init__(self,h_size,channel,fre_size,t_size):

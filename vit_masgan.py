@@ -25,28 +25,27 @@ class timeAttention(nn.Module):
 
 
 class llstm(nn.Module):
-    def __init__(self, h_size, channel, fre_size, t_size):
+    def __init__(self,h_size,channel,fre_size,t_size):
         super(llstm, self).__init__()
-        self.channel = channel
-        self.t_size = t_size
-        self.f_size = fre_size
-        self.linear = nn.Linear(h_size, channel * fre_size).to(device=device)
-        self.h_size = h_size
-        self.linear2 = nn.Linear(t_size, t_size).to(device=device)
-        self.dp = nn.Dropout(0.2)
-
-    def lstm(self, input):
+        self.channel=channel
+        self.t_size=t_size
+        self.f_size=fre_size
+        self.linear=nn.Linear(h_size,channel*fre_size).to(device=device)
+        self.h_size=h_size
+        self.linear2=nn.Linear(t_size,t_size).to(device=device)
+        self.dp=nn.Dropout(0.2)
+    def lstm(self,input):
         bs, c, i_size, T = input.shape
-        input = input.reshape(bs, c * i_size, T)
-        _, i_size, _ = input.shape
-        b_ih = nn.Parameter(torch.rand(4 * self.h_size).to(device=device))
-        b_hh = nn.Parameter(torch.rand(4 * self.h_size).to(device=device))
-        b_ch = nn.Parameter(torch.rand(4 * self.h_size).to(device=device))
-        w_ih = nn.Parameter(torch.rand(4 * self.h_size, i_size).to(device=device))
-        w_hh = nn.Parameter(torch.rand(4 * self.h_size, self.h_size).to(device=device))
-        w_ch = nn.Parameter(torch.rand(4 * self.h_size, self.h_size).to(device=device))
-        prev_h = torch.rand(bs, self.h_size).to(device=device)
-        prev_c = torch.rand(bs, self.h_size).to(device=device)
+        input=input.reshape(bs,c*i_size,T)
+        _,i_size,_=input.shape
+        b_ih=nn.Parameter(torch.rand(4*self.h_size).to(device=device))
+        b_hh=nn.Parameter(torch.rand(4*self.h_size).to(device=device))
+        b_ch=nn.Parameter(torch.rand(4*self.h_size).to(device=device))
+        w_ih=nn.Parameter(torch.rand(4*self.h_size,i_size).to(device=device))
+        w_hh=nn.Parameter(torch.rand(4*self.h_size,self.h_size).to(device=device))
+        w_ch=nn.Parameter(torch.rand(4*self.h_size,self.h_size).to(device=device))
+        prev_h = torch.rand(bs,self.h_size).to(device=device)
+        prev_c = torch.rand(bs,self.h_size).to(device=device)
         batch_w_ih = w_ih.unsqueeze(0).tile(bs, 1, 1)
         batch_w_hh = w_hh.unsqueeze(0).tile(bs, 1, 1)
         batch_w_ch = w_ch.unsqueeze(0).tile(bs, 1, 1)
@@ -63,39 +62,24 @@ class llstm(nn.Module):
             w_times_c_prev = torch.bmm(batch_w_ch, prev_c.unsqueeze(-1))
             w_times_c_prev = w_times_c_prev.squeeze(-1)
 
-            i_t = torch.sigmoid(
-                w_times_x[:, :self.h_size] + w_times_c_prev[:, :self.h_size] + w_times_h_prev[:, :self.h_size] + b_ch[
-                                                                                                                 :self.h_size]
+            i_t = torch.sigmoid( w_times_x[:, :self.h_size] + w_times_c_prev[:, :self.h_size] + w_times_h_prev[:, :self.h_size] + b_ch[:self.h_size]
                 + b_hh[:self.h_size] + b_ih[:self.h_size])
-            f_t = torch.sigmoid(w_times_x[:, self.h_size:2 * self.h_size] + w_times_c_prev[:,
-                                                                            self.h_size:2 * self.h_size] + w_times_h_prev[
-                                                                                                           :,
-                                                                                                           self.h_size:2 * self.h_size] + b_ch[
-                                                                                                                                          self.h_size:2 * self.h_size]
-                                + b_hh[self.h_size:2 * self.h_size] + b_ih[self.h_size:2 * self.h_size])
-            g_t = torch.tanh(w_times_x[:, 2 * self.h_size:3 * self.h_size] + w_times_c_prev[:,
-                                                                             2 * self.h_size:3 * self.h_size] + w_times_h_prev[
-                                                                                                                :,
-                                                                                                                2 * self.h_size:3 * self.h_size] + b_ch[
-                                                                                                                                                   2 * self.h_size:3 * self.h_size]
-                             + b_hh[2 * self.h_size:3 * self.h_size] + b_ih[2 * self.h_size:3 * self.h_size])
-            o_t = torch.sigmoid(w_times_x[:, 3 * self.h_size:4 * self.h_size] + w_times_c_prev[:,
-                                                                                3 * self.h_size:4 * self.h_size] + w_times_h_prev[
-                                                                                                                   :,
-                                                                                                                   3 * self.h_size:4 * self.h_size] + b_ch[
-                                                                                                                                                      3 * self.h_size:4 * self.h_size]
-                                + b_hh[3 * self.h_size:4 * self.h_size] + b_ih[3 * self.h_size:4 * self.h_size])
+            f_t = torch.sigmoid(w_times_x[:, self.h_size:2 * self.h_size] + w_times_c_prev[:, self.h_size:2 * self.h_size] + w_times_h_prev[:,self.h_size:2 * self.h_size] + b_ch[self.h_size:2 * self.h_size]
+                + b_hh[self.h_size:2 * self.h_size] + b_ih[self.h_size:2 * self.h_size])
+            g_t = torch.tanh(w_times_x[:, 2 * self.h_size:3 * self.h_size] + w_times_c_prev[:, 2 * self.h_size:3 * self.h_size] + w_times_h_prev[:,2 * self.h_size:3 * self.h_size] + b_ch[2 * self.h_size:3 * self.h_size]
+                + b_hh[2 * self.h_size:3 * self.h_size] + b_ih[2 * self.h_size:3 * self.h_size])
+            o_t = torch.sigmoid(w_times_x[:, 3 * self.h_size:4 * self.h_size] + w_times_c_prev[:, 3 * self.h_size:4 * self.h_size] + w_times_h_prev[:,3 * self.h_size:4 * self.h_size] + b_ch[3 * self.h_size:4 * self.h_size]
+                + b_hh[3 * self.h_size:4 * self.h_size] + b_ih[3 * self.h_size:4 * self.h_size])
             prev_c = f_t * prev_c + i_t * g_t
             prev_h = o_t * torch.tanh(prev_c)
             output[:, :, t] = prev_h
         return output
-
-    def forward(self, input):
-        output1 = self.lstm(input)
-        output1 = self.dp(F.relu(self.linear(output1.transpose(1, 2))))
+    def forward(self,input):
+        output1=self.lstm(input)
+        output1=self.dp(F.relu(self.linear(output1.transpose(1,2))))
         output1 = output1.transpose(1, 2)
-        output1 = output1.reshape(-1, self.channel, self.f_size, self.t_size) + input
-        output1 = self.dp(F.relu(self.linear2(output1)))
+        output1=output1.reshape(-1,self.channel,self.f_size,self.t_size)+input
+        output1=self.dp(F.relu(self.linear2(output1)))
         return output1
 
 
@@ -111,7 +95,7 @@ class llstm(nn.Module):
             nn.Sigmoid()
         )
 
-        # 参数初始化
+
 
     def forward(self, input):
         b, c, _, _ = input.size()
