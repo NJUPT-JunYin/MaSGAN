@@ -1,25 +1,26 @@
 # Readme
 
-## MaSGAN Model
-- •	The MaSGAN model adopts an encoder-decoder-encoder structure. The primary encoder learns the distribution of normal samples, while the secondary encoder reduces the dimension of generated samples for anomaly detection.
->Developed in Java based on the Android Studio platform, Windows 10.
+## 1. MaSGAN Model
+•	The MaSGAN model adopts an encoder-decoder-encoder structure. The primary encoder learns the distribution of normal samples, while the secondary encoder reduces the dimension of generated samples for anomaly detection.
 
-### System operating environment：
->The simulation program runs on Android emulators. For optimal performance, the Android version should be Android 6.0 or higher.
+•	It incorporates channel and frequency attention mechanisms in the convolutional block to enhance feature extraction capabilities.
 
-### System operation instructions：
+•	During training, only normal samples are used, enabling the model to reconstruct normal sounds accurately and identify abnormal samples based on reconstruction errors.
 
-#### Running the Simulation Program on a PC:
->Setting up the Emulator:
->* In Android Studio on your PC, set up a suitable Android emulator (virtual device) that meets the required specifications (Android 6.0 or higher). This emulator will serve as the environment for running the simulation program.
+•	The specific code of the MaSGAN model is in the masgan.py file.
 
->Running in the Emulator:
->* Install the simulation app on the emulator.
->* Launch the app within the emulator by clicking its icon.
+## 2. LLSTM-MaSGAN Model
+•	The LLSTM-MaSGAN model extends the MaSGAN model by integrating an improved linear long short-term memory network (LLSTM).
 
->Executing Simulation of Different Approaches:
->* Click the relevant buttons within the app interface to execute corresponding approaches.
->* The app will display simulation parameters and results on the emulator screen, allowing you to observe the performance of different collaborative recovery process.
+•	The LLSTM unit is designed to capture and analyze the temporal features of sound data, which is crucial for handling the dynamic changes in machine sound characteristics over time.
 
->Observing Simulation Results:
->* The simulation app will showcase relevant metrics such as frame rate, bit rate and decoding rate directly within the app interface. 
+•	The specific code of the LLSTM-MaSGAN model is in the llstmmasgan.py file.
+
+## 3. System operation instructions：
+•	PyTorch
+
+## 4. Dataset
+The code is designed to work with the MIMII Dataset. The dataset contains normal and abnormal sound clips from five types of industrial equipment (Fan, Gearbox, Pump, Slider rail, and Valve). The abnormal sounds were collected by damaging the machines, and background noise was added to simulate realistic environments.
+
+## 5.Other  improvable modules
+The Vision Transformer that can be added to the model and the TSM module for processing spatial information are in the vit.py and TSM.py files respectively.
