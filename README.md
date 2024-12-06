@@ -17,10 +17,12 @@
 •	The specific code of the LLSTM-MaSGAN model is in the llstmmasgan.py file.
 
 ## 3. System operation instructions：
-•	PyTorch
+•	PyTorch 0.4.0
 
 ## 4. Dataset
-The code is designed to work with the MIMII Dataset. The dataset contains normal and abnormal sound clips from five types of industrial equipment (Fan, Gearbox, Pump, Slider rail, and Valve). The abnormal sounds were collected by damaging the machines, and background noise was added to simulate realistic environments.
+The code is designed to work with the MIMII Dataset[1]. The dataset contains normal and abnormal sound clips from five types of industrial equipment (Fan, Gearbox, Pump, Slider rail, and Valve). The abnormal sounds were collected by damaging the machines, and background noise was added to simulate realistic environments.
 
 ## 5.Other  improvable modules
 The Vision Transformer that can be added to the model and the TSM module for processing spatial information are in the vit.py and TSM.py files respectively.
+
+[1]
