@@ -7,7 +7,7 @@ device = (torch.device('cuda') if torch.cuda.is_available() else torch.device('c
 class timeAttention(nn.Module):
     def __init__(self, time_dim):
         super(timeAttention, self).__init__()
-        self.adv = nn.AdaptiveAvgPool2d(1)  # 将时间轴维度缩小到1
+        self.adv = nn.AdaptiveAvgPool2d(1)  
         self.fc = nn.Sequential(
             nn.Linear(time_dim, time_dim // 2),
             nn.ReLU(),
@@ -17,7 +17,6 @@ class timeAttention(nn.Module):
 
     def forward(self, input):
         b, _, _, t = input.size()
-        # 调整输入维度以匹配自适应平均池化的要求
         input1 = input.permute(0, 3, 2, 1)
         y = self.adv(input1).view(b, t)
         y = self.fc(y).view(b, 1, 1, t)
